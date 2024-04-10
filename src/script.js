@@ -11,12 +11,12 @@ const originalBoxSize = 3; // Original width and height of a box
 let autopilot;
 let gameEnded;
 let robotPrecision; // Determines how precise the game is on autopilot
-let highScore = 0;
 
 
 const scoreElement = document.getElementById("score");
 const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
+const resultScore = document.getElementById("resultscore");
 
 init();
 
@@ -34,6 +34,7 @@ var boxPlacedCrunch = new Howl({
 });
 var bgMusic = new Howl({
   src: ['sounds/bg_music.mp3'],
+  loop: true,
   volume: 0.6
 });
 var gameOver = new Howl({
@@ -49,16 +50,17 @@ function init() {
   overhangs = [];
   setRobotPrecision();
 
+  // Initialize ThreeJs
+  const aspect = window.innerWidth / window.innerHeight;
+  const width = 10;
+  const height = width / aspect;
+
   // Initialize CannonJS
   world = new CANNON.World();
   world.gravity.set(0, -10, 0); // Gravity pulls things down
   world.broadphase = new CANNON.NaiveBroadphase();
   world.solver.iterations = 40;
 
-  // Initialize ThreeJs
-  const aspect = window.innerWidth / window.innerHeight;
-  const width = 10;
-  const height = width / aspect;
 
   camera = new THREE.OrthographicCamera(
     width / -2, // left
@@ -68,16 +70,6 @@ function init() {
     0, // near plane
     100 // far plane
   );
-
-
-  // to use perspective camera instead
-  // camera = new THREE.PerspectiveCamera(
-  //   45, // field of view
-  //   aspect, // aspect ratio
-  //   1, // near plane
-  //   100 // far plane
-  // );
-
 
   camera.position.set(4, 4, 4);
   camera.lookAt(0, 0, 0);
@@ -97,6 +89,10 @@ function init() {
   const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
   dirLight.position.set(10, 20, 0);
   scene.add(dirLight);
+
+  const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 0.2);
+  scene.add(light);
+
   //scene.add(lightHelper);
 
   // Set up renderer
@@ -169,6 +165,7 @@ function generateBox(x, y, z, width, depth, falls) {
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(x, y, z);
   scene.add(mesh);
+  scene.background = new THREE.Color(`hsl(${0 + stack.length * 4}, 60%, 80%)`);
 
   // CannonJS
   const shape = new CANNON.Box(
@@ -180,7 +177,6 @@ function generateBox(x, y, z, width, depth, falls) {
   const body = new CANNON.Body({ mass, shape });
   body.position.set(x, y, z);
   world.addBody(body);
-
 
   return {
     threejs: mesh,
@@ -300,8 +296,13 @@ function missedTheSpot() {
   world.remove(topLayer.cannonjs);
   scene.remove(topLayer.threejs);
 
-  bgMusic.fade(bgMusic.volume(), 0, 700);
+  bgMusic.stop();
   gameOver.play();
+  
+  if (resultScore) {
+    resultScore.innerText = stack.length - 2;
+  }
+  
 
   gameEnded = true;
   if (resultsElement && !autopilot) resultsElement.style.display = "flex";
@@ -310,7 +311,7 @@ function missedTheSpot() {
 function animation(time) {
   if (lastTime) {
     const timePassed = time - lastTime;
-    const speed = 0.008;
+    var speed = 0.004 + (stack.length - 1) / 20000;
 
     const topLayer = stack[stack.length - 1];
     const previousLayer = stack[stack.length - 2];

@@ -29,6 +29,12 @@ a:visited {
 #results {
   display: none;
   cursor: default;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 #results .content,
@@ -38,11 +44,10 @@ a:visited {
   border-radius: 20px;
 }
 
-#results {}
 
 #score {
   position: absolute;
-  color: white;
+  color: rgb(74, 73, 73);
   font-size: 3em;
   font-weight: bold;
   top: 30px;
