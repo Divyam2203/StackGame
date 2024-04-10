@@ -12,14 +12,13 @@ body {
 }
 
 #results,
-body:hover #instructions {
+#instructions {
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
 }
 
 a:visited {
@@ -53,4 +52,3 @@ a:visited {
   top: 30px;
   right: 30px;
 }
-

@@ -298,11 +298,10 @@ function missedTheSpot() {
 
   bgMusic.stop();
   gameOver.play();
-  
+
   if (resultScore) {
     resultScore.innerText = stack.length - 2;
   }
-  
 
   gameEnded = true;
   if (resultsElement && !autopilot) resultsElement.style.display = "flex";
@@ -318,13 +317,9 @@ function animation(time) {
 
     // The top level box should move if the game has not ended AND
     // it's either NOT in autopilot or it is in autopilot and the box did not yet reach the robot position
-    const boxShouldMove =
-      !gameEnded &&
-      (!autopilot ||
-        (autopilot &&
-          topLayer.threejs.position[topLayer.direction] <
-          previousLayer.threejs.position[topLayer.direction] +
-          robotPrecision));
+    const boxShouldMove = !gameEnded && (!autopilot || (autopilot && topLayer.threejs.position[topLayer.direction] <
+      previousLayer.threejs.position[topLayer.direction] +
+      robotPrecision));
 
     if (boxShouldMove) {
       // Keep the position visible on UI and the position in the model in sync
