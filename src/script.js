@@ -61,7 +61,6 @@ function init() {
   world.broadphase = new CANNON.NaiveBroadphase();
   world.solver.iterations = 40;
 
-
   camera = new THREE.OrthographicCamera(
     width / -2, // left
     width / 2, // right
@@ -92,8 +91,6 @@ function init() {
 
   const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 0.2);
   scene.add(light);
-
-  //scene.add(lightHelper);
 
   // Set up renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
