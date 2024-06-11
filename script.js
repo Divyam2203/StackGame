@@ -1,4 +1,4 @@
-
+//import * as THREE from 'three';
 window.focus(); // Capture keys right away (by default focus is on editor)
 
 let camera, scene, renderer; // ThreeJS globals
