@@ -9,6 +9,12 @@ This project is a browser-based game inspired by Ketchapp's mobile game Stack bu
 - Score Tracking: Track your high score and compete with yourself or others.
 - Sound effects and background music for a more immersive experience.
 
+## Screenshots
+
+![Screenshot 2024-04-10 111635](https://github.com/Divyam2203/StackGame/assets/69101943/ace68322-7474-4605-95dd-aa2954ffe78b)
+![Screenshot 2024-04-10 111931](https://github.com/Divyam2203/StackGame/assets/69101943/9f51066a-2b92-48da-83cb-fc48fe44d1d3)
+![Screenshot 2024-04-10 111812](https://github.com/Divyam2203/StackGame/assets/69101943/5c391c9a-7082-43aa-ac36-3bdf01c58871)
+
 ## How to Play
 
 - Open the game in your web browser.
